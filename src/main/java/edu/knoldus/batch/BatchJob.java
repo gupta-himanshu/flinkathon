@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package edu.knoluds;
+package edu.knoldus.batch;
 
 import org.apache.flink.api.java.ExecutionEnvironment;
 

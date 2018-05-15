@@ -1,21 +1,23 @@
-package edu.knoluds;
+package edu.knoldus.stream;
 
 import org.apache.flink.api.common.functions.MapFunction;
+import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010;
-import org.apache.flink.api.common.serialization.SimpleStringSchema;
 
 /**
  * Simple example on how to read with a Kafka consumer
  *   --topic test --bootstrap.servers localhost:9092 --zookeeper.connect localhost:2181 --group.id myGroup
  */
-public class ReadFromKafka {
+public class ReadFromKafkaWithCheckpoint {
 
 	public static void main(String[] args) throws Exception {
 		// create execution environment
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+		env.enableCheckpointing(1000L, CheckpointingMode.EXACTLY_ONCE);
 
 		// parse user parameters
 		ParameterTool parameterTool = ParameterTool.fromArgs(args);
